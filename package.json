@@ -1,0 +1,12 @@
+{
+    "name": "@olegpoliakov/tasks-core",
+    "version": "0.1.0",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./entities": "./src/entities/index.ts"
+    },
+    "dependencies": {
+        "bson": "^7.2.0"
+    }
+}

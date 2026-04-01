@@ -1,0 +1,3 @@
+{
+  "extends": "@olegpoliakov/shared/server/tsconfig.json"
+}
