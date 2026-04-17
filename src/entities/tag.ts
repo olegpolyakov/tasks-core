@@ -1,4 +1,4 @@
-import { Entity } from '@olegpoliakov/core';
+import { Entity } from '@olegpolyakov/core';
 
 export default class Tag extends Entity {
     name: string;

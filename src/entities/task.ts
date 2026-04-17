@@ -1,12 +1,12 @@
-import { Entity } from '@olegpoliakov/core';
+import { Entity } from '@olegpolyakov/core';
 
-import type Tag from './tag.ts';
 import type Project from './project.ts';
+import type Tag from './tag.ts';
 
 export enum TaskPriority {
-    Low = 'low',
-    Medium = 'medium',
-    High = 'high'
+    Low = 0,
+    Medium = 1,
+    High = 2
 }
 
 export default class Task extends Entity {
