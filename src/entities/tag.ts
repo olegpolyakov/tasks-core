@@ -3,7 +3,7 @@ import { Entity } from '@olegpolyakov/core';
 export default class Tag extends Entity {
     name: string;
     icon?: string;
-    tasksCount?: number;
+    readonly tasksCount: number;
 
     constructor({
         name,

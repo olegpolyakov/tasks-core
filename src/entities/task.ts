@@ -1,6 +1,5 @@
 import { Entity } from '@olegpolyakov/core';
 
-import type Project from './project.ts';
 import type Tag from './tag.ts';
 
 export enum TaskPriority {
@@ -12,33 +11,29 @@ export enum TaskPriority {
 export default class Task extends Entity {
     title: string;
     completed: boolean;
-    content?: string;
-    priority: TaskPriority;
     dueDate?: Date;
-    projectIds: string[];
+    content: string;
+    priority: TaskPriority;
     tagIds: string[];
 
-    projects: Project[] = [];
     tags: Tag[] = [];
 
     constructor({
         title,
         completed = false,
-        content = '',
         dueDate,
+        content = '',
         priority = TaskPriority.Medium,
         tagIds = [],
-        projectIds = [],
         ...rest
     }: Task & Entity) {
         super(rest);
 
         this.title = title;
         this.completed = completed;
-        this.content = content;
         this.dueDate = dueDate;
+        this.content = content;
         this.priority = priority;
-        this.projectIds = projectIds;
         this.tagIds = tagIds;
     }
 }
