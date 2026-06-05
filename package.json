@@ -15,5 +15,12 @@
     "scripts": {
         "test": "vitest run",
         "test:watch": "vitest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/olegpolyakov/tasks-core.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     }
 }
