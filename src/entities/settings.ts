@@ -1,16 +1,23 @@
-import { Entity } from '@olegpolyakov/core';
+import { Settings, SettingsData } from '@olegpolyakov/core/entities';
 
-export default class Settings extends Entity {
-    userId: string;
+export type TasksSettingsData = {
     listsOrder: string[];
     listsSort: string;
     tagsOrder: string[];
     tagsSort: string;
     tasksOrder: Record<string, string[]>; // { [id]: [taskId1, taskId2] }
     tasksSort: Record<string, string>; // { [id]: 'name:dir' }
+} & SettingsData;
+
+export default class TasksSettings extends Settings implements TasksSettingsData {
+    listsOrder: string[];
+    listsSort: string;
+    tagsOrder: string[];
+    tagsSort: string;
+    tasksOrder: Record<string, string[]>;
+    tasksSort: Record<string, string>;
 
     constructor({
-        userId = '',
         listsOrder = [],
         listsSort = 'createdAt:desc',
         tagsOrder = [],
@@ -18,9 +25,9 @@ export default class Settings extends Entity {
         tasksOrder = {},
         tasksSort = {},
         ...rest
-    }: Settings & Entity) {
+    }: Partial<TasksSettingsData> = {}) {
         super(rest);
-        this.userId = userId;
+
         this.listsOrder = listsOrder;
         this.listsSort = listsSort;
         this.tagsOrder = tagsOrder;
