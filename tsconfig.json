@@ -1,5 +1,5 @@
 {
-  "extends": "@olegpolyakov/backend/config/tsconfig.base.json",
+  "extends": "@olegpolyakov/core/tsconfig",
   "compilerOptions": {
     "baseUrl": "."
   }
