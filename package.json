@@ -1,10 +1,17 @@
 {
     "name": "@olegpolyakov/tasks-core",
     "version": "0.3.0",
+    "description": "",
+    "author": "Oleg Poliakov <olegpoliakov@outlook.com>",
     "type": "module",
     "exports": {
         ".": "./src/index.ts",
         "./entities": "./src/entities/index.ts"
+    },
+    "scripts": {
+        "lint": "eslint ./src",
+        "test": "vitest run",
+        "test:watch": "vitest"
     },
     "dependencies": {
         "@olegpolyakov/core": "^0.6.0"
@@ -15,10 +22,6 @@
         "eslint-plugin-react-hooks": "^7.1.1",
         "eslint-plugin-simple-import-sort": "^13.0.0",
         "vitest": "^4.0.18"
-    },
-    "scripts": {
-        "test": "vitest run",
-        "test:watch": "vitest"
     },
     "repository": {
         "type": "git",
