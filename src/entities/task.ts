@@ -21,6 +21,7 @@ export type TaskData = {
     content: string;
     priority: TaskPriority;
     tagIds: string[];
+    childrenIds: string[];
 } & EntityData;
 
 export default class Task extends Entity implements TaskData {
@@ -31,7 +32,11 @@ export default class Task extends Entity implements TaskData {
     readonly content: string;
     readonly priority: TaskPriority;
     readonly tagIds: string[];
-    declare readonly tags: Tag[];
+    readonly childrenIds: string[];
+
+    tags: Tag[] = [];
+    children: Task[] = [];
+    parent?: Task | null;
 
     constructor({
         title = '',
@@ -40,9 +45,10 @@ export default class Task extends Entity implements TaskData {
         recurrence,
         content = '',
         priority = TaskPriority.Medium,
+        childrenIds = [],
         tagIds = [],
         ...rest
-    }: Partial<TaskData>) {
+    }: Partial<TaskData>, parent?: Task) {
         super(rest);
 
         this.title = title;
@@ -52,6 +58,16 @@ export default class Task extends Entity implements TaskData {
         this.content = content;
         this.priority = priority;
         this.tagIds = tagIds;
+        this.childrenIds = childrenIds;
+        this.parent = parent;
+    }
+
+    get hasParent(): boolean {
+        return !!this.parent;
+    }
+
+    get hasChildren(): boolean {
+        return this.childrenIds.length > 0;
     }
 
     getNextDueDate(): Date | undefined {
