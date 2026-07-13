@@ -10,6 +10,10 @@
         "@olegpolyakov/core": "^0.6.0"
     },
     "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^8.62.1",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^7.1.1",
+        "eslint-plugin-simple-import-sort": "^13.0.0",
         "vitest": "^4.0.18"
     },
     "scripts": {
