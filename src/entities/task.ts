@@ -21,6 +21,7 @@ export type TaskData = {
     content: string;
     priority: TaskPriority;
     tagIds: string[];
+    projectIds: string[];
     childrenIds: string[];
 } & EntityData;
 
@@ -32,6 +33,7 @@ export default class Task extends Entity implements TaskData {
     readonly content: string;
     readonly priority: TaskPriority;
     readonly tagIds: string[];
+    readonly projectIds: string[];
     readonly childrenIds: string[];
 
     tags: Tag[] = [];
@@ -45,8 +47,9 @@ export default class Task extends Entity implements TaskData {
         recurrence,
         content = '',
         priority = TaskPriority.Medium,
-        childrenIds = [],
         tagIds = [],
+        projectIds = [],
+        childrenIds = [],
         ...rest
     }: Partial<TaskData>, parent?: Task) {
         super(rest);
@@ -58,6 +61,7 @@ export default class Task extends Entity implements TaskData {
         this.content = content;
         this.priority = priority;
         this.tagIds = tagIds;
+        this.projectIds = projectIds;
         this.childrenIds = childrenIds;
         this.parent = parent;
     }
