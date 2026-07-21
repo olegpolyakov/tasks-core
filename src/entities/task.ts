@@ -16,6 +16,7 @@ export enum TaskPriority {
 export type TaskData = {
     title: string;
     completed: boolean;
+    important: boolean;
     dueDate?: Date;
     recurrence?: RecurrenceData;
     content: string;
@@ -28,6 +29,7 @@ export type TaskData = {
 export default class Task extends Entity implements TaskData {
     readonly title: string;
     readonly completed: boolean;
+    readonly important: boolean;
     readonly dueDate?: Date;
     readonly recurrence?: RecurrenceData;
     readonly content: string;
@@ -43,6 +45,7 @@ export default class Task extends Entity implements TaskData {
     constructor({
         title = '',
         completed = false,
+        important = false,
         dueDate,
         recurrence,
         content = '',
@@ -56,6 +59,7 @@ export default class Task extends Entity implements TaskData {
 
         this.title = title;
         this.completed = completed;
+        this.important = important;
         this.dueDate = dueDate;
         this.recurrence = recurrence;
         this.content = content;
