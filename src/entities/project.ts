@@ -6,13 +6,14 @@ import {
 export type ProjectSectionData = {
     id: string;
     name: string;
+    icon?: string;
     taskIds: string[];
 };
 
 export type ProjectData = {
     name: string;
-    icon?: string;
     description?: string;
+    icon?: string;
     taskIds: string[];
     sectionIds: string[];
     sectionData: Record<string, ProjectSectionData>;
@@ -20,8 +21,8 @@ export type ProjectData = {
 
 export default class Project extends Entity implements ProjectData {
     readonly name: string;
-    readonly icon?: string;
     readonly description?: string;
+    readonly icon?: string;
     readonly taskIds: string[];
     readonly sectionIds: string[];
     readonly sectionData: Record<string, ProjectSectionData>;
