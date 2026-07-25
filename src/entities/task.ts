@@ -5,6 +5,7 @@ import {
     RecurrenceData
 } from '@olegpolyakov/core';
 
+import type Project from './project.ts';
 import type Tag from './tag.ts';
 
 export enum TaskPriority {
@@ -22,9 +23,15 @@ export type TaskData = {
     content: string;
     priority: TaskPriority;
     tagIds: string[];
-    projectIds: string[];
     childrenIds: string[];
 } & EntityData;
+
+export type TaskRefs = {
+    tags?: Tag[];
+    projects?: Project[];
+    children?: Task[];
+    parent?: Task | null;
+};
 
 export default class Task extends Entity implements TaskData {
     readonly title: string;
@@ -35,26 +42,33 @@ export default class Task extends Entity implements TaskData {
     readonly content: string;
     readonly priority: TaskPriority;
     readonly tagIds: string[];
-    readonly projectIds: string[];
     readonly childrenIds: string[];
 
-    tags: Tag[] = [];
-    children: Task[] = [];
-    parent?: Task | null;
+    parent: Task | null;
+    children: Task[];
+    tags: Tag[];
+    projects: Project[];
 
-    constructor({
-        title = '',
-        completed = false,
-        important = false,
-        dueDate,
-        recurrence,
-        content = '',
-        priority = TaskPriority.Medium,
-        tagIds = [],
-        projectIds = [],
-        childrenIds = [],
-        ...rest
-    }: Partial<TaskData>, parent?: Task) {
+    constructor(
+        {
+            title = '',
+            completed = false,
+            important = false,
+            dueDate,
+            recurrence,
+            content = '',
+            priority = TaskPriority.Medium,
+            tagIds = [],
+            childrenIds = [],
+            ...rest
+        }: Partial<TaskData>,
+        {
+            tags = [],
+            projects = [],
+            children = [],
+            parent = null
+        }: TaskRefs = {}
+    ) {
         super(rest);
 
         this.title = title;
@@ -65,9 +79,12 @@ export default class Task extends Entity implements TaskData {
         this.content = content;
         this.priority = priority;
         this.tagIds = tagIds;
-        this.projectIds = projectIds;
         this.childrenIds = childrenIds;
+
         this.parent = parent;
+        this.children = children;
+        this.tags = tags;
+        this.projects = projects;
     }
 
     get hasParent(): boolean {
