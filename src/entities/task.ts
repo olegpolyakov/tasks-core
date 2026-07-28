@@ -17,11 +17,11 @@ export enum TaskPriority {
 export type TaskData = {
     title: string;
     completed: boolean;
+    active: boolean;
     important: boolean;
     dueDate?: Date;
     recurrence?: RecurrenceData;
     content: string;
-    priority: TaskPriority;
     tagIds: string[];
     childrenIds: string[];
 } & EntityData;
@@ -36,11 +36,11 @@ export type TaskRefs = {
 export default class Task extends Entity implements TaskData {
     readonly title: string;
     readonly completed: boolean;
+    readonly active: boolean;
     readonly important: boolean;
     readonly dueDate?: Date;
     readonly recurrence?: RecurrenceData;
     readonly content: string;
-    readonly priority: TaskPriority;
     readonly tagIds: string[];
     readonly childrenIds: string[];
 
@@ -53,11 +53,11 @@ export default class Task extends Entity implements TaskData {
         {
             title = '',
             completed = false,
+            active = false,
             important = false,
             dueDate,
             recurrence,
             content = '',
-            priority = TaskPriority.Medium,
             tagIds = [],
             childrenIds = [],
             ...rest
@@ -73,11 +73,11 @@ export default class Task extends Entity implements TaskData {
 
         this.title = title;
         this.completed = completed;
+        this.active = active;
         this.important = important;
         this.dueDate = dueDate;
         this.recurrence = recurrence;
         this.content = content;
-        this.priority = priority;
         this.tagIds = tagIds;
         this.childrenIds = childrenIds;
 
