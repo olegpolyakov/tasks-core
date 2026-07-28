@@ -13,6 +13,7 @@ export type ProjectSectionData = {
 export type ProjectData = {
     name: string;
     description?: string;
+    content?: string;
     icon?: string;
     taskIds: string[];
     sectionIds: string[];
@@ -22,6 +23,7 @@ export type ProjectData = {
 export default class Project extends Entity implements ProjectData {
     readonly name: string;
     readonly description?: string;
+    readonly content?: string;
     readonly icon?: string;
     readonly taskIds: string[];
     readonly sectionIds: string[];
@@ -31,6 +33,7 @@ export default class Project extends Entity implements ProjectData {
         name = '',
         icon,
         description,
+        content,
         taskIds = [],
         sectionIds = [],
         sectionData = {},
@@ -41,6 +44,7 @@ export default class Project extends Entity implements ProjectData {
         this.name = name;
         this.icon = icon;
         this.description = description;
+        this.content = content;
         this.taskIds = taskIds;
         this.sectionIds = sectionIds;
         this.sectionData = sectionData;
