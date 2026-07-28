@@ -3,8 +3,14 @@ export {
     type ProjectData,
     type ProjectSectionData
 } from './project.ts';
+
 export { default as TasksSettings } from './settings.ts';
-export { default as Tag } from './tag.ts';
+
+export {
+    default as Tag,
+    type TagData
+} from './tag.ts';
+
 export {
     default as Task,
     TaskPriority,
