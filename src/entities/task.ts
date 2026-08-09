@@ -75,7 +75,7 @@ export default class Task extends Entity implements TaskData {
         this.completed = completed;
         this.active = active;
         this.important = important;
-        this.dueDate = dueDate;
+        this.dueDate = dueDate ? new Date(dueDate) : undefined;
         this.recurrence = recurrence;
         this.content = content;
         this.tagIds = tagIds;
