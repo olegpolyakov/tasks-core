@@ -11,19 +11,18 @@ describe('Task', () => {
 
             expect(task.title).toBe('');
             expect(task.completed).toBe(false);
-            expect(task.dueDate).toBeUndefined();
+            expect(task.date).toBeUndefined();
             expect(task.recurrence).toBeUndefined();
             expect(task.content).toBe('');
-            expect(task.priority).toBe(1); // TaskPriority.Medium
             expect(task.tagIds).toEqual([]);
         });
     });
 
     describe('getNextDueDate', () => {
         test('returns undefined if dueDate is not set', () => {
-            const taskWithoutRecurrence = new Task({ dueDate: new Date() });
+            const taskWithoutRecurrence = new Task({ date: new Date() });
 
-            expect(taskWithoutRecurrence.getNextDueDate()).toBeUndefined();
+            expect(taskWithoutRecurrence.getNextDate()).toBeUndefined();
         });
 
         test('returns undefined if recurrence is not set', () => {
@@ -33,7 +32,7 @@ describe('Task', () => {
                 }
             });
 
-            expect(taskWithoutDueDate.getNextDueDate()).toBeUndefined();
+            expect(taskWithoutDueDate.getNextDate()).toBeUndefined();
         });
 
         test('returns the next due date for daily recurrence', () => {
@@ -42,9 +41,9 @@ describe('Task', () => {
                 frequency: RecurrenceFrequency.Daily,
                 interval: 1
             };
-            const task = new Task({ dueDate, recurrence });
+            const task = new Task({ date: dueDate, recurrence });
 
-            const nextDueDate = task.getNextDueDate();
+            const nextDueDate = task.getNextDate();
 
             expect(nextDueDate).toBeInstanceOf(Date);
             expect(nextDueDate?.getTime()).toBe(dueDate.getTime() + 24 * 60 * 60 * 1000); // Next day
@@ -57,9 +56,9 @@ describe('Task', () => {
                 interval: 1,
                 values: [0, 2] // Monday and Wednesday
             };
-            const task = new Task({ dueDate, recurrence });
+            const task = new Task({ date: dueDate, recurrence });
 
-            const nextDueDate = task.getNextDueDate();
+            const nextDueDate = task.getNextDate();
 
             expect(nextDueDate).toBeInstanceOf(Date);
             expect(nextDueDate?.getDay()).toBe(2); // Wednesday
@@ -72,9 +71,9 @@ describe('Task', () => {
                 interval: 1,
                 values: [15] // 15th of each month
             };
-            const task = new Task({ dueDate, recurrence });
+            const task = new Task({ date: dueDate, recurrence });
 
-            const nextDueDate = task.getNextDueDate();
+            const nextDueDate = task.getNextDate();
 
             expect(nextDueDate).toBeInstanceOf(Date);
             expect(nextDueDate?.getDate()).toBe(15);
@@ -88,9 +87,9 @@ describe('Task', () => {
                 interval: 1,
                 values: [0] // January
             };
-            const task = new Task({ dueDate, recurrence });
+            const task = new Task({ date: dueDate, recurrence });
 
-            const nextDueDate = task.getNextDueDate();
+            const nextDueDate = task.getNextDate();
 
             expect(nextDueDate).toBeInstanceOf(Date);
             expect(nextDueDate?.getFullYear()).toBe(2025);

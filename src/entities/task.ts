@@ -1,4 +1,5 @@
 import {
+    DateTime,
     Entity,
     EntityData,
     Recurrence,
@@ -17,9 +18,8 @@ export enum TaskPriority {
 export type TaskData = {
     title: string;
     completed: boolean;
-    active: boolean;
     important: boolean;
-    dueDate?: Date;
+    date?: Date;
     recurrence?: RecurrenceData;
     content: string;
     tagIds: string[];
@@ -36,9 +36,8 @@ export type TaskRefs = {
 export default class Task extends Entity implements TaskData {
     readonly title: string;
     readonly completed: boolean;
-    readonly active: boolean;
     readonly important: boolean;
-    readonly dueDate?: Date;
+    readonly date?: Date;
     readonly recurrence?: RecurrenceData;
     readonly content: string;
     readonly tagIds: string[];
@@ -53,9 +52,8 @@ export default class Task extends Entity implements TaskData {
         {
             title = '',
             completed = false,
-            active = false,
             important = false,
-            dueDate,
+            date,
             recurrence,
             content = '',
             tagIds = [],
@@ -73,9 +71,8 @@ export default class Task extends Entity implements TaskData {
 
         this.title = title;
         this.completed = completed;
-        this.active = active;
         this.important = important;
-        this.dueDate = dueDate ? new Date(dueDate) : undefined;
+        this.date = date ? new Date(date) : undefined;
         this.recurrence = recurrence;
         this.content = content;
         this.tagIds = tagIds;
@@ -87,6 +84,62 @@ export default class Task extends Entity implements TaskData {
         this.projects = projects;
     }
 
+    get dateTime(): DateTime | undefined {
+        return this.date ? DateTime.fromJSDate(this.date) : undefined;
+    }
+
+    get dateTimeString(): string | undefined {
+        if (!this.dateTime) return;
+
+        if (this.isCurrent) {
+            return this.dateTime.toRelativeCalendar() ?? '';
+        }
+
+        return this.dateTime.toLocaleString();
+    }
+
+    get isCurrent(): boolean {
+        if (!this.dateTime) return false;
+        
+        if (this.isOverdue || this.isDueToday) return true;
+
+        return (
+            this.dateTime < DateTime.now().endOf('week') &&
+            this.dateTime >= DateTime.now().startOf('week')
+        );
+    }
+
+    get isNext(): boolean {
+        if (!this.date) return false;
+
+        const today = DateTime.now();
+        const tomorrow = today.plus({ 'days': 1 }).startOf('day');
+        const endOfPeriod = today.plus({ 'days': 21 }).endOf('day');
+        const date = DateTime.fromJSDate(this.date);
+
+        return date >= tomorrow && date < endOfPeriod;
+    }
+
+    get isOverdue(): boolean {
+        return !this.completed && (this.date
+            ? DateTime.fromJSDate(this.date) < DateTime.now().startOf('day')
+            : false); 
+    }
+
+    get isDueToday(): boolean {
+        return this.date
+            ? DateTime.fromJSDate(this.date).hasSame(DateTime.now(), 'day')
+            : false;
+    }
+
+    get hasTags(): boolean {
+        return this.tagIds.length > 0;
+    }
+
+    get hasProjects(): boolean {
+        return this.projects.length > 0;
+    }
+
     get hasParent(): boolean {
         return !!this.parent;
     }
@@ -95,9 +148,9 @@ export default class Task extends Entity implements TaskData {
         return this.childrenIds.length > 0;
     }
 
-    getNextDueDate(): Date | undefined {
-        return this.recurrence && this.dueDate
-            ? Recurrence.create(this.recurrence).calculateNextDate(this.dueDate)
+    getNextDate(): Date | undefined {
+        return this.date && this.recurrence
+            ? Recurrence.create(this.recurrence).calculateNextDate(this.date)
             : undefined;
     }
 }
