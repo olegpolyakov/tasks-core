@@ -1,6 +1,6 @@
 import { Entity, EntityData } from '@olegpolyakov/core';
 
-import type { Task } from './index.ts';
+import type Task from './task';
 
 export type TagData = {
     name: string;
@@ -22,5 +22,13 @@ export default class Tag extends Entity implements TagData {
 
         this.name = name;
         this.icon = icon;
+    }
+
+    toData(): TagData {
+        return {
+            ...super.toData(),
+            name: this.name,
+            icon: this.icon
+        };
     }
 }

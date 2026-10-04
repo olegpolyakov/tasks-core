@@ -49,4 +49,17 @@ export default class Project extends Entity implements ProjectData {
         this.sectionIds = sectionIds;
         this.sectionData = sectionData;
     }
+
+    toData(): ProjectData {
+        return {
+            ...super.toData(),
+            name: this.name,
+            description: this.description,
+            content: this.content,
+            icon: this.icon,
+            taskIds: this.taskIds,
+            sectionIds: this.sectionIds,
+            sectionData: this.sectionData
+        };
+    }
 }

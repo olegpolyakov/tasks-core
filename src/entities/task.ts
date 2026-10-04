@@ -6,8 +6,8 @@ import {
     RecurrenceData
 } from '@olegpolyakov/core';
 
-import type Project from './project.ts';
-import type Tag from './tag.ts';
+import type Project from './project';
+import type Tag from './tag';
 
 export enum TaskPriority {
     Low = 0,
@@ -152,5 +152,19 @@ export default class Task extends Entity implements TaskData {
         return this.date && this.recurrence
             ? Recurrence.create(this.recurrence).calculateNextDate(this.date)
             : undefined;
+    }
+
+    toData(): TaskData {
+        return {
+            ...super.toData(),
+            title: this.title,
+            completed: this.completed,
+            important: this.important,
+            date: this.date,
+            recurrence: this.recurrence,
+            content: this.content,
+            tagIds: this.tagIds,
+            childrenIds: this.childrenIds
+        };
     }
 }
