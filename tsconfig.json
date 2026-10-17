@@ -1,6 +1,6 @@
 {
-  "extends": "@olegpolyakov/core/tsconfig",
-  "compilerOptions": {
-    "baseUrl": "."
-  }
+    "extends": "@olegpolyakov/core/tsconfig",
+    "compilerOptions": {
+        "baseUrl": "."
+    }
 }
